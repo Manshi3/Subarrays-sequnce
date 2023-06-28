@@ -23,6 +23,9 @@ public:
         return maxi;
     }
 };
+
+TC - O(n)
+SC - O(1)
     - obs it's easy just write code just like before. just instead of plus sign, replace it with a multiplication sign.
 
 - catch here is, if we have negatives in the array and if we multiply it all, we'll get negative ans and we don't want that.
