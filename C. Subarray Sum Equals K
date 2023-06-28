@@ -41,3 +41,9 @@ public:
         return cnt;
     }
 };
+
+TC - 
+O(n) for for loop
+O(1) for unordered map in average case / O(n) for unordered map in worst case / O(log n) for simple map
+
+SC - O(n) for unordered map
