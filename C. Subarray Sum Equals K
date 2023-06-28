@@ -1,0 +1,43 @@
+brute - 3 nested for loops
+
+better - 2 nested for loops
+
+optimal - 
+Algorithm / Intuition
+In this approach, we are going to use the concept of the prefix sum to solve this problem. Here, the prefix sum of a subarray ending at index i simply 
+means the sum of all the elements of that subarray.
+
+Observation:
+
+Assume, the prefix sum of a subarray ending at index i is x. In that subarray, we will search for another subarray ending at index i, whose sum equals k. 
+Here, we need to observe that if there exists another subarray ending at index i with sum k, then the prefix sum of the rest of the subarray will be x-k.
+
+Now, for a subarray ending at index i with the prefix sum x, if we remove the part with the prefix sum x-k, we will be left with the part whose sum is equal to k. 
+And that is what we want.
+
+Now, there may exist multiple subarrays with the prefix sum x-k. So, the number of subarrays with sum k that we can generate from the entire subarray ending 
+at index i, is exactly equal to the number of subarrays with the prefix sum x-k, that we can remove from the entire subarray.
+
+That is why, instead of searching the subarrays with sum k, we will keep the occurrence of the prefix sum of the subarrays using a map data structure. 
+
+In the map, we will store every prefix sum calculated, with its occurrence in a <key, value> pair. Now, at index i, we just need to check the map data structure
+to get the number of times that the subarrays with the prefix sum x-k occur. Then we will simply add that number to our answer.
+
+We will apply the above process for all possible indices of the given array. The possible values of the index i can be from 0 to n-1(where n = size of the array).
+
+class Solution {
+public:
+    int subarraySum(vector<int>& nums, int k) {
+        int cnt = 0;
+        int prefixsum = 0;
+        unordered_map<int, int> mp;
+        mp[0] = 1;
+        for(int i = 0; i < nums.size(); i++) {
+            prefixsum += nums[i];
+            int lookfor = prefixsum - k;
+            cnt += mp[lookfor];
+            mp[prefixsum] += 1;
+        }
+        return cnt;
+    }
+};
