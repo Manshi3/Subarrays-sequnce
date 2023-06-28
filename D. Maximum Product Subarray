@@ -1,0 +1,38 @@
+Given an integer array nums, find a subarray that has the largest product, and return the product.
+The test cases are generated so that the answer will fit in a 32-bit integer.
+
+brute - 3 nested for loops
+
+better - 2 nested for loops
+
+optimal - 
+
+class Solution {
+public:
+    int maxProduct(vector<int>& nums) {
+        int prefix = 1, suffix = 1;
+        int maxi = INT_MIN;
+        int n = nums.size();
+        for(int i = 0; i < n; i++) {
+            if(prefix == 0) prefix = 1;
+            if(suffix == 0) suffix = 1;
+            prefix *= nums[i];
+            suffix *= nums[n-i-1];
+            maxi = max(maxi, max(prefix, suffix));
+        }
+        return maxi;
+    }
+};
+    - obs it's easy just write code just like before. just instead of plus sign, replace it with a multiplication sign.
+
+- catch here is, if we have negatives in the array and if we multiply it all, we'll get negative ans and we don't want that.
+- if there are EVEN numbers of negatives present in the array, then no worries as the multiplication of all arrays will come out positive only.
+- if there are ODD numbers of negatives present then obs the ans will come out negative and we don't want that.
+    - so there are odd numbers of negatives present in the array 
+    - we try to remove one negative element to get even numbers of negatives in an array. 
+    - how to and what to remove is - 
+    - we make prefixes and suffixes.
+    - prefix is at the start of the array and suffix at the end
+    - we divide the array into prefixes and suffixes and see which array is giving better results - positive and max results.
+    - logically, if we remove starting pr end ka -ve, we'll be left with one small prefix and big suffix with 2 -ves, the biggerer array with 2-ves will be mp our ans cus large.
+    - we further divide the array into multiple parts if there are multiple 0s present there. we just ignore the middle wala 0 and make separate arrays in between arrays.
