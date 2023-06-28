@@ -1,0 +1,40 @@
+the sum of subarray having maximum sum among all subarrays.
+
+brute - 3 nested for loops 
+
+better - 2 nested for loops
+
+#include <bits/stdc++.h> 
+
+long long maxSubarraySum(int arr[], int n) {
+    int maxi = INT_MIN;
+    int sum = 0;
+    for(int i = 0; i < n; i++) {
+        for(int j = i; j < n; j++) {
+            sum += arr[j];
+            maxi = max(maxi, sum);
+        }
+    }
+    return maxi;
+}
+
+optimal - kadane's algo - nothing interesting tbh
+
+maxi sum rkhte. update krte as we move. agr element -ve me hai to sum 0 kr dete and aage bhdte. but agr sum bohot positive me hai to -ve lene se drte ni cus aage 
+subarrays bde hone ke chances hai so
+
+#include <bits/stdc++.h> 
+long long maxSubarraySum(int arr[], int n) {
+    long long maxi = LONG_MIN;
+    long long sum = 0;
+    for(int i = 0; i < n; i++) {
+        sum += arr[i];
+        maxi = max(maxi, sum);
+        if(sum < 0) sum = 0;
+    }
+    if(maxi < 0) return 0;
+    return maxi;
+}
+
+TC - O(n)
+SC - O(1)
