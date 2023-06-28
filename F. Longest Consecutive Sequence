@@ -1,0 +1,60 @@
+Given an unsorted array of integers nums, return the length of the longest consecutive elements sequence.
+You must write an algorithm that runs in O(n) time.
+
+BRUTE 
+- we take the element and check element+1 or element-1 in the array, if found, update the cnt and move forward and repeat,
+    if not found any sequence then we start with next element and look for its sequence and dont touch the cnt. 
+    in the end we just return the cnt which obv is the max subsequence.
+
+class Solution {
+public:
+    bool ls(vector<int> &nums, int x) {
+        for(int i = 0; i < nums.size(); i++) {
+            if(nums[i] == x) return true;
+        }
+        return false;
+    }
+    int longestConsecutive(vector<int>& nums) {
+        int cnt = INT_MIN;
+        for(int i = 0; i < nums.size(); i++) {
+            int x = nums[i];
+            cnt = 1;
+            while(ls(nums, x+1) == true) x += 1, cnt += 1;
+        }
+        return cnt;
+    }
+};
+
+BETTER - 
+	- Kinda same as before but here we have the count of continues current. last element and maxlength where max stays.
+	- sort. then iterate and update the lastelement with current element and update the currcnt with 1 and since we dont have anything other than 1 we update maxlen as 1 too.
+	- repeat. aise he keep updating all of them but once you find an element not being the sequence of prev element, we start fresh and set cntcurr as 0, maxlen stays max.
+
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        if(nums.size() == 0) return 0;
+        sort(nums.begin(), nums.end());
+        int maxlen = 1;
+        int currcnt = 1;
+        int lastelement = INT_MIN;
+        for(int i = 0; i < nums.size(); i++) {
+            if(nums[i]-1 == lastelement) {
+                currcnt += 1;
+                lastelement = nums[i];
+            }
+            else if(nums[i] != lastelement) {
+                currcnt = 1;
+                lastelement = nums[i];
+            }
+            maxlen = max(maxlen, currcnt);
+        }
+        return maxlen;
+    }
+};
+
+TC - O(nlogn) for sorting + O(n) for for loop
+SC - O(1)
+but we distorting the given arrray
+
+OPTIMAL - hashmap
