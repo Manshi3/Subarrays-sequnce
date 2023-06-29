@@ -57,4 +57,40 @@ TC - O(nlogn) for sorting + O(n) for for loop
 SC - O(1)
 but we distorting the given arrray
 
-OPTIMAL - hashmap
+OPTIMAL - set.
+	- we take unordered set. we iterate and and take the first element and look for an element-1 in the set. if found, we look for it's further below. once we stop
+	getting the elements below, we stop and update the cnt. 
+	- after we find some sequnce, and while moving we come across new sequence, we start the cnt and look for the elements below. and update cnt.
+	- we return the max cnt.
+
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        int maxi = INT_MIN;
+        if(nums.size() == 0) return 0;
+        unordered_set<int> st;
+        for(int i = 0; i < nums.size(); i++) {
+            st.insert(nums[i]);
+        }
+        for(auto it : st) {
+            if(st.find(it-1) == st.end()) {
+                int cnt = 1;
+                int x = it;
+                while(st.find(x+1) != st.end()) {
+                    x += 1;
+                    cnt += 1;
+                }
+                maxi = max(maxi, cnt);
+            }
+        }
+        return maxi;
+    }
+};
+
+TC - Unordered set - O(1) in abverage of best case
+	- worst case - O(n) rare case
+assuming set is taking O(1) 
+O(n) iterating and putting then into set
+O(n) for iterating the set. O(n) for finding element+1 for all.
+total - O(3n) tc
+SC - O(n)
