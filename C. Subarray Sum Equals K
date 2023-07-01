@@ -7,6 +7,12 @@ Algorithm / Intuition
 In this approach, we are going to use the concept of the prefix sum to solve this problem. Here, the prefix sum of a subarray ending at index i simply 
 means the sum of all the elements of that subarray.
 
+---
+simple bhasa me bole to - 
+    usually aise question me, we look for sum equals to k in the array na, but here we will look for (ab tak jitne subarrays hai unka sum - k).
+    ye we will look in map. jitni baar bhi ye (ab tak jitne subarrays hai unka sum - k) map me aaye hai uska count ham ek variable me store kr denge. and map aage bheda denge.
+---
+
 Observation:
 
 Assume, the prefix sum of a subarray ending at index i is x. In that subarray, we will search for another subarray ending at index i, whose sum equals k. 
